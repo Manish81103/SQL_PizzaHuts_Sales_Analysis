@@ -17,7 +17,7 @@ This project involves analyzing Pizza Hut's sales data using SQL. The analysis a
 2.Basic knowledge of SQL syntax and functions
 such as joins,aggregate functions,sub queries.
 ## image
-![App Screenshot](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHojmoPWLHgteBwiMEa_ItOjGf2LJ_hLWYB8jxYyI_lcccVu6UTJNeiTfM&s=10)
+![App Screenshot](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwINgdlnnZ_9DOVWXWmZO_ResG-FzfJKvdGg&usqp=CAU)
 ## Data Sources
 The project uses the following tables:
 
