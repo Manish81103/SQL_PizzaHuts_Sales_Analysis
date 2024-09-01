@@ -10,12 +10,12 @@ FROM
    
 -- Q2.Calculate the total revenue generated from pizza sales. 
 
-SELECT 
-    SUM(od.quantity * pz.price) AS total_revenue
-FROM
-    order_details od
-        JOIN
-    pizzas pz ON od.pizza_id = pz.pizza_id;
+create view v_total_revenue as
+SELECT SUM(od.quantity * pz.price)
+FROM order_details od
+JOIN pizzas pz ON od.pizza_id = pz.pizza_id;
+
+select * from v_total_revenue;
 
 
 -- Q3.Determine the distribution of orders by hour of the day.
@@ -132,17 +132,15 @@ LIMIT 3;
 
 -- Q12.Calculate the percentage contribution of each pizza category to total revenue.
 
-select pt.category,round(sum(pz.price*od.quantity) /(SELECT SUM(od.quantity * pz.price)
-FROM order_details od
-JOIN pizzas pz 
-ON od.pizza_id = pz.pizza_id)*100,2) as revenue
-
+select pt.category,
+round(sum(pz.price*od.quantity) / (select * from v_total_revenue) *100,2) as revenue
 from pizzas pz
-join order_details od 
+join 
+order_details od 
 on pz.pizza_id = od.pizza_id
-join pizza_types pt
+join 
+pizza_types pt
 on pt.pizza_type_id = pz.pizza_type_id
 group by pt.category;
-
 
 
