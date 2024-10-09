@@ -145,7 +145,7 @@ LIMIT 3;
 -- Q13.Calculate the percentage contribution of each pizza category to total revenue.
 
 select pt.category,
-round(sum(pz.price*od.quantity) / (select * from v_total_revenue) *100,2) as revenue
+round(sum(pz.price*od.quantity) / (select * from v_total_revenue) *100,2) as percentage
 from pizzas pz
 join 
 order_details od 
@@ -154,5 +154,25 @@ join
 pizza_types pt
 on pt.pizza_type_id = pz.pizza_type_id
 group by pt.category;
+
+
+
+-- Q14.write a query to return month wise sales and order the sales from highest to lowest amount.
+
+SELECT monthname(date) AS month_name,SUM(od.quantity * pz.price) AS total_sales
+FROM orders os
+JOIN order_details od 
+ON os.order_id = od.order_id
+JOIN pizzas pz
+ON od.pizza_id = pz.pizza_id
+GROUP BY 1
+ORDER BY 2 desc;
+
+
+
+
+
+
+
 
 
