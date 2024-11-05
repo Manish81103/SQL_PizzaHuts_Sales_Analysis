@@ -159,7 +159,7 @@ group by pt.category;
 
 -- Q14.write a query to return month wise sales and order the sales from highest to lowest amount.
 
-SELECT monthname(date) AS month_name,SUM(od.quantity * pz.price) AS total_sales
+SELECT monthname(date) AS months,SUM(od.quantity * pz.price) AS total_sales
 FROM orders os
 JOIN order_details od 
 ON os.order_id = od.order_id
@@ -168,6 +168,37 @@ ON od.pizza_id = pz.pizza_id
 GROUP BY 1
 ORDER BY 2 desc;
 
+
+-- Q15.compare the previous month's sales with current month's sales.
+
+select months,sales,
+lag(sales) over() as previous_month_sales,sales-lag(sales) over() as difference
+from
+(select monthname(ord.date) as months,sum(od.quantity*pz.price) as sales
+from order_details od
+join pizzas pz
+on od. pizza_id= pz.pizza_id
+join orders ord
+on ord.order_id = od.order_id
+group by 1) t;
+
+
+
+-- Q16. Write a query to find the month when total sales crossed 500,000.
+
+select * from 
+(select *, sum(sales) over(rows between unbounded preceding and current row) as cumsum
+from
+(select monthname(ord.date) as month, sum(od.quantity*pz.price) as sales
+from order_details od
+join pizzas pz
+on od.pizza_id = pz.pizza_id
+join orders ord
+on ord.order_id = od.order_id
+group by  monthname(ord.date)) t) 
+t1
+where t1.cumsum > 500000
+limit 1;
 
 
 
